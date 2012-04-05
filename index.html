@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Mavenrepo by immopoly</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Mavenrepo</h1>
+        <p>Maven artifacts for immopoly-related projects</p>
+        <p class="view"><a href="https://github.com/immopoly/mavenrepo">View the Project on GitHub <small>immopoly/mavenrepo</small></a></p>
+        <ul>
+          <li><a href="https://github.com/immopoly/mavenrepo/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/immopoly/mavenrepo/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/immopoly/mavenrepo">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>our very own maven repo</h1>
+
+<h2>about</h2>
+
+<p>This is a maven repo for all artifcats we use but where's no or no current version in the public maven repositories.</p>
+
+<p>We created this repository following <a href="http://coffeecoders.de/2011/09/using-github-as-a-personal-maven-repository/">this blog post</a> by our team member <a href="https://github.com/stefanhoth">stefanhoth</a>.</p>
+
+<h2>What's in the box?</h2>
+
+<ul>
+<li>
+<a href="http://code.google.com/apis/analytics/docs/mobile/download.html">Analytics SDK for Android</a>: The SDK enables you to track usage of your app just as if it were a website. First, identify the places in your app where you'd like to trigger a pageview or an event, then use the SDK to send these events to Google Analytics.
+
+<ul>
+<li>versions: <strong>1.3.1</strong>, <strong>1.4.2</strong>
+</li>
+</ul>
+</li>
+<li>
+<a href="https://github.com/petedoyle/android-support-v4-googlemaps#readme">android-support-v4-googlemaps</a>: A port of the Android Compatibility package which makes FragmentActivity extend MapActivity. This is a hack to make it possible to use a MapView in a Fragment.
+
+<ul>
+<li>versions: <strong>r3</strong> (<a href="http://developer.android.com/sdk/compatibility-library.html">original by Google</a>), <strong>r6-petedoyle</strong> (patched version)</li>
+</ul>
+</li>
+<li>
+<a href="https://github.com/stefanhoth/JSON-java#readme">JSON-Java</a>: A reference implementation of a JSON package in Java.
+
+<ul>
+<li>versions: <strong>20111006</strong>
+</li>
+</ul>
+</li>
+</ul><p>More to come if needed.</p>
+
+<h2>How to use this?</h2>
+
+<p>There are two ways to make maven aware of new repositories besides the pre-configured one. Either in <code>~/.m2/repositories/settings.xml</code> which would be global for every repository but just for your user account. Or you can add the information into the <code>pom.xml</code> of your project. Since we want all developers for this project to easily use the new repository we will use the later.</p>
+
+<p>Open your <code>pom.xml</code> and add the following lines for our example. Of course you have to edit the group-id, artifact and version according to your lib.</p>
+
+<pre><code>&lt;project xmlns="<a href="http://maven.apache.org/POM/4.0.0">http://maven.apache.org/POM/4.0.0</a>" xmlns:xsi="<a href="http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</a>" xsi:schemaLocation="<a href="http://maven.apache.org/POM/4.0.0">http://maven.apache.org/POM/4.0.0</a> <a href="http://maven.apache.org/maven-v4_0_0.xsd">http://maven.apache.org/maven-v4_0_0.xsd</a>"&gt;
+    &lt;modelversion&gt;4.0.0&lt;/modelversion&gt;
+    &lt;!-- ... more project definition --&gt;
+
+    &lt;dependencies&gt;
+
+        &lt;dependency&gt;
+        &lt;groupid&gt;org.json&lt;/groupid&gt;
+        &lt;artifactid&gt;json&lt;/artifactid&gt;
+        &lt;version&gt;20111006&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!-- more dependecies... --&gt;
+    &lt;/dependencies&gt;
+
+    &lt;!-- build config etc. ... --&gt;
+
+    &lt;repositories&gt;
+        &lt;repository&gt;
+            &lt;id&gt;immopoly-snapshots&lt;/id&gt;
+            &lt;url&gt;<a href="https://raw.github.com/immopoly/mavenrepo/master/snapshots&lt;/url">https://raw.github.com/immopoly/mavenrepo/master/snapshots&lt;/url</a>&gt;
+            &lt;releases&gt;
+                &lt;enabled&gt;false&lt;/enabled&gt;
+                &lt;updatepolicy&gt;always&lt;/updatepolicy&gt;
+                &lt;checksumpolicy&gt;warn&lt;/checksumpolicy&gt;
+            &lt;/releases&gt;
+            &lt;snapshots&gt;
+                &lt;enabled&gt;true&lt;/enabled&gt;
+                &lt;updatepolicy&gt;never&lt;/updatepolicy&gt;
+                &lt;checksumpolicy&gt;fail&lt;/checksumpolicy&gt;
+            &lt;/snapshots&gt;
+        &lt;/repository&gt;
+        &lt;repository&gt;
+            &lt;id&gt;immopoly-releases&lt;/id&gt;
+            &lt;url&gt;<a href="https://raw.github.com/immopoly/mavenrepo/master/releases&lt;/url">https://raw.github.com/immopoly/mavenrepo/master/releases&lt;/url</a>&gt;
+            &lt;releases&gt;
+                &lt;enabled&gt;true&lt;/enabled&gt;
+                &lt;updatepolicy&gt;always&lt;/updatepolicy&gt;
+                &lt;checksumpolicy&gt;fail&lt;/checksumpolicy&gt;
+            &lt;/releases&gt;
+            &lt;snapshots&gt;
+                &lt;enabled&gt;false&lt;/enabled&gt;
+                &lt;updatepolicy&gt;always&lt;/updatepolicy&gt;
+                &lt;checksumpolicy&gt;warn&lt;/checksumpolicy&gt;
+            &lt;/snapshots&gt;
+        &lt;/repository&gt;
+
+        &lt;!-- more repositories --&gt;
+
+    &lt;/repositories&gt;
+&lt;/project&gt;
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/immopoly">immopoly</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
